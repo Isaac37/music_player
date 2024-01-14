@@ -6,6 +6,12 @@ import 'package:provider/provider.dart';
 class SongPage extends StatelessWidget {
   const SongPage({super.key});
 
+  //convert duration into minutes
+  String formatTime(Duration duration) {
+    String twoDigitSeconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+    String formattedTime = "${duration.inMinutes}:$twoDigitSeconds";
+    return formattedTime;
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<PlaylistProvider>(
@@ -90,19 +96,19 @@ class SongPage extends StatelessWidget {
                   //song duration progress
                   Column(
                     children: [
-                      const Padding(
+                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //start time
-                            Text('0:00'),
+                            Text(formatTime(value.currentDuration)),
                             //shuffle icon
                             Icon(Icons.shuffle),
                             //repeat icon
                             Icon(Icons.repeat),
                             // end time
-                            Text('0:00'),
+                            Text(formatTime(value.totalDuration)),
                           ],
                         ),
                       ),

@@ -1,5 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:music_player/models/song.dart';
 
 class PlaylistProvider extends ChangeNotifier {
@@ -71,7 +71,9 @@ class PlaylistProvider extends ChangeNotifier {
   //play previous song
   void playPreviousSong() async {
     //if more than 2sec have passed restart the current song
-    if (_currentSongIndex! > 2) {}
+    if (_currentSongIndex! > 2) {
+      seek(Duration.zero);
+    }
     //if its within 2sec of the song go to the previous song
     else {
       if (_currentSongIndex! > 0) {
@@ -112,7 +114,6 @@ class PlaylistProvider extends ChangeNotifier {
     if (newIndex != null) {
       play(); // play the song at the new index
     }
-
     //updates UI
     notifyListeners();
   }

@@ -28,9 +28,14 @@ class _HomePageState extends State<HomePage> {
   void goToSong(int songIndex) {
     //update current song index
     playlistProvider.currentSongIndex = songIndex;
-    
+
     //navigate to song page
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SongPage(),),);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SongPage(),
+      ),
+    );
   }
 
   @override
@@ -38,31 +43,31 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Center(child: Text('P L A Y L I S T')),
+        title: const Center(
+          child: Text('P L A Y L I S T'),
+        ),
       ),
-      drawer: MyDrawer(),
-      body: Consumer<PlaylistProvider>(
-        builder: (context, value, child) {
-          //get the playlist
-          final List<Song> playlist = value.playlist;
-          return ListView.builder(
+      drawer: const MyDrawer(),
+      body: Consumer<PlaylistProvider>(builder: (context, value, child) {
+        //get the playlist
+        final List<Song> playlist = value.playlist;
+        return ListView.builder(
             itemCount: playlist.length,
-              itemBuilder: (context, index) {
+            itemBuilder: (context, index) {
               //get individual song
-                final Song song = playlist[index];
+              final Song song = playlist[index];
 
-                //return list tile UI
-               return ListTile(
-                  title: Text(song.songName),
-                 subtitle: Text(song.artistName),
-                 leading: Image.asset(song.albumImagePath),
-                 onTap: () {goToSong(index);},
-                );
-              }
-          );
-
-        }
-      ),
+              //return list tile UI
+              return ListTile(
+                title: Text(song.songName),
+                subtitle: Text(song.artistName),
+                leading: Image.asset(song.albumImagePath),
+                onTap: () {
+                  goToSong(index);
+                },
+              );
+            });
+      }),
     );
   }
 }
