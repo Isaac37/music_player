@@ -45,7 +45,7 @@ class SongPage extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
 
@@ -67,14 +67,14 @@ class SongPage extends StatelessWidget {
                               children: [
                                 Text(
                                   currentSong.songName,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 20),
                                 ),
                                 Text(currentSong.artistName),
                               ],
                             ),
 
-                            Icon(
+                            const Icon(
                               Icons.favorite,
                               color: Colors.red,
                             ),
@@ -112,10 +112,17 @@ class SongPage extends StatelessWidget {
                                 enabledThumbRadius: 6)),
                         child: Slider(
                           min: 0,
-                          max: 100,
-                          value: 50,
+                          max: value.totalDuration.inSeconds.toDouble(),
+                          value: value.currentDuration.inSeconds.toDouble(),
                           activeColor: Colors.green,
-                          onChanged: (value) {},
+                          onChanged: (double double) {
+                            //duration when the user is sliding around
+
+                          },
+                          onChangeEnd: (double double) {
+                            //sliding has finished go to that position in the song
+                            value.seek(Duration(seconds: double.toInt()));
+                          },
                         ),
                       ),
                     ],
@@ -127,33 +134,37 @@ class SongPage extends StatelessWidget {
                       //skip previous
                       Expanded(
                         child: GestureDetector(
-                          onTap: () {},
-                          child: NewBox(
+                          onTap: value.playPreviousSong,
+                          child: const NewBox(
                             child: Icon(Icons.skip_previous),
                           ),
                         ),
                       ),
-                      SizedBox(
+
+
+                      const SizedBox(
                         width: 20,
                       ),
+
+
                       //play pause
                       Expanded(
                         flex: 2,
                         child: GestureDetector(
-                          onTap: () {},
-                          child: NewBox(
-                            child: Icon(Icons.play_arrow),
+                          onTap: value.pauseOrResume,
+                          child:  NewBox(
+                            child: Icon(value.isPlaying ? Icons.play_arrow : Icons.pause),
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       //skip forward
                       Expanded(
                         child: GestureDetector(
-                          onTap: () {},
-                          child: NewBox(
+                          onTap: value.playNextSong,
+                          child: const NewBox(
                             child: Icon(Icons.skip_next),
                           ),
                         ),
