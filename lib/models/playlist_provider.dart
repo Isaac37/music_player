@@ -4,7 +4,28 @@ import 'package:music_player/models/song.dart';
 
 class PlaylistProvider extends ChangeNotifier {
   //playlist of songs
-  final List<Song> _playlist = [];
+  final List<Song> _playlist = [
+
+    Song(
+        songName: "All I Ask",
+        artistName: 'Adele',
+        albumImagePath: 'assets/images/adele.jpg',
+        audioPath: 'audio/All I Ask.mp3'
+    ),
+    Song(
+        songName: "Hello",
+        artistName: 'Adele',
+        albumImagePath: 'assets/images/adele.jpg',
+        audioPath: 'audio/01. Hello.mp3'
+    ),
+    Song(
+        songName: "River Lea",
+        artistName: 'Adele',
+        albumImagePath: 'assets/images/adele.jpg',
+        audioPath: 'audio/07. River Lea.mp3'
+    ),
+
+  ];
 
   // current song playing index
   int? _currentSongIndex;
@@ -71,13 +92,15 @@ class PlaylistProvider extends ChangeNotifier {
   //play previous song
   void playPreviousSong() async {
     //if more than 2sec have passed restart the current song
-    if (_currentSongIndex! > 2) {
+    if (_currentDuration.inSeconds > 2) {
       seek(Duration.zero);
     }
     //if its within 2sec of the song go to the previous song
     else {
       if (_currentSongIndex! > 0) {
         currentSongIndex = _currentSongIndex! -1;
+      } else {
+        currentSongIndex = _playlist.length -1;
       }
     }
   }
@@ -89,12 +112,14 @@ class PlaylistProvider extends ChangeNotifier {
       notifyListeners();
     });
     //listen for current duration
-    _audioPlayer.onDurationChanged.listen((newPosition) {
+    _audioPlayer.onPositionChanged.listen((newPosition) {
       _currentDuration = newPosition;
       notifyListeners();
     });
     //listen for song completion
-    _audioPlayer.onPlayerComplete.listen((event) {playNextSong();});
+    _audioPlayer.onPlayerComplete.listen((event) {
+      playNextSong();
+    });
     
   }
   //dispose audio player

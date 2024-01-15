@@ -97,16 +97,16 @@ class SongPage extends StatelessWidget {
                   Column(
                     children: [
                        Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //start time
                             Text(formatTime(value.currentDuration)),
                             //shuffle icon
-                            Icon(Icons.shuffle),
+                            const Icon(Icons.shuffle),
                             //repeat icon
-                            Icon(Icons.repeat),
+                            const Icon(Icons.repeat),
                             // end time
                             Text(formatTime(value.totalDuration)),
                           ],
@@ -115,7 +115,7 @@ class SongPage extends StatelessWidget {
                       SliderTheme(
                         data: SliderTheme.of(context).copyWith(
                             thumbShape: const RoundSliderThumbShape(
-                                enabledThumbRadius: 6)),
+                                enabledThumbRadius: 0)),
                         child: Slider(
                           min: 0,
                           max: value.totalDuration.inSeconds.toDouble(),
